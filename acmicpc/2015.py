@@ -18,4 +18,5 @@ for s in sums:
     if s not in sums_dict:
         sums_dict[s] = 0
     sums_dict[s] += 1
+    print(sums_dict)
 print(answer)
