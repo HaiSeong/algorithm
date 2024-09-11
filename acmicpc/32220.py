@@ -7,7 +7,10 @@ def count(k):
     # dp[i][j] : i번 수업을 고려한 경우의 수, i번째 수업을 고려하고 나서 j 연강임
     dp = [[0] * (k + 1) for _ in range(n)]
     dp[0][0] = (essentials[0] + 1) % 2
-    dp[0][1] = 1
+    try:
+        dp[0][1] = 1
+    except:
+        pass
 
     for i in range(1, n):
         for j in range(1, k+1):
