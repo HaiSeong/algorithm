@@ -1,26 +1,40 @@
+
 import sys
 
+sys.setrecursionlimit(10000)
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union(parent, a, b):
+    p1 = find_parent(parent, a)
+    p2 = find_parent(parent, b)
+    if p1 < p2:
+        parent[p2] = p1
+    else:
+        parent[p1] = p2
+
 input = sys.stdin.readline
-
 v, e = map(int, input().split())
-
 edges = []
-for _ in range(e):
-    edges.append(tuple(map(int, input().split())))
+parent = [i for i in range(v + 1)]
 
-edges.sort(key=lambda x: x[2])
+for i in range(e):
+    v1, v2, cost = map(int, input().split())
+    edges.append((cost, v1, v2))
 
-answer = 0
-linked = set()
-for a, b, cost in edges:
-    if cost > 0 and a in linked and b in linked:
-        continue
+edges.sort()
+result = 0
 
-    answer += cost
-    linked.add(a)
-    linked.add(b)
+for edge in edges:
+    cost, v1, v2 = edge
+    if find_parent(parent, v1) != find_parent(parent, v2):
+        union(parent, v1, v2)
+        result += cost
 
-    if cost > 0 and len(linked) == v:
-        break
 
-print(answer)
+print(result)
+
+
