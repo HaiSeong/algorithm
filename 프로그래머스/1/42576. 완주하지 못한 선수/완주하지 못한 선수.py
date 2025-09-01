@@ -1,19 +1,14 @@
 from collections import defaultdict
 
 def solution(participant, completion):
-    participant_dict = defaultdict(int)
-    completion_dict = defaultdict(int)
+    
+    dic = {}
+    all = 0
     
     for p in participant:
-        participant_dict[p] += 1
-        
+        dic[hash(p)] = p
+        all += hash(p)
     for c in completion:
-        completion_dict[c] += 1
-        
-    answer = ""
-    for p in participant:
-        if participant_dict[p] != completion_dict[p]:
-            answer = p
-            break
-    
-    return answer
+        all -= hash(c)
+            
+    return dic[all]
